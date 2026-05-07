@@ -7,7 +7,7 @@ import time
 # Function part
 # img2text
 def img2text(url):
-    image_to_text_model = pipeline("image-to-text", model="zai-org/GLM-OCR")
+    image_to_text_model = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
     text = image_to_text_model(url)[0]["generated_text"]
     return text
 
@@ -38,7 +38,7 @@ if uploaded_file is not None:
     st.text('Processing img2text...')
     
     image_to_text_model = pipeline("image-to-text", 
-                               model="zai-org/GLM-OCR")
+                               model="Salesforce/blip-image-captioning-base")
     scenario = image_to_text_model(uploaded_file.name)[0]["generated_text"]
   
     st.write(f"**Scenario:** {scenario}")
