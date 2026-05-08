@@ -27,19 +27,19 @@ def filter_caption(caption):
     
 # img2text
 def img2text(url):
-    image_to_text_model = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
+    image_to_text_model = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning")
     text = image_to_text_model(url)[0]["generated_text"]
     return text
 
 # text2story
 def text2story(text):
-    story_pipe = pipeline("text-generation", model="roneneldan/TinyStories-1M")
-    prompt = f"Once upon a time, {text}. "
-    story_results = story_pipe(
-        prompt,
-        max_new_tokens=200,
-        num_return_sequences=1
+    story_pipe = pipeline("text-generation", model="TinyLlama/TinyLlama-1.1B-Chat-v1.0")
+    prompt = (
+        f"Write a fun, simple and short story for 3-10 years old kids "
+        f"based on this scene: {text}. "
+        f"The story should be happy and easy to understand."
     )
+    story_results = story_pipe(prompt, max_new_tokens=200, num_return_sequences=1)
     story = story_results[0]["generated_text"]
     return story
 
