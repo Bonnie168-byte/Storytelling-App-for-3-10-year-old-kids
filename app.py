@@ -18,16 +18,11 @@ SAFE_CAPTIONS = [
 ]
 
 def filter_caption(caption):
-    """
-    Check if the image caption contains inappropriate content.
-    If so, replace with a safe, generic description.
-    Returns (filtered_caption, was_filtered).
-    """
     caption_lower = caption.lower()
     for word in UNSAFE_WORDS:
         if word in caption_lower:
             # Replace with a kid-friendly generic caption
-            safe_caption = "a person having a wonderful time on a sunny day"
+            safe_caption = random.choice(SAFE_CAPTIONS)
             return safe_caption, True
     return caption, False
     
