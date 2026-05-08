@@ -48,8 +48,8 @@ def text2story(text):
 # text2audio
 def text2audio(story_text):
     audio_pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
-    audio_data = audio_pipe(story_text)
-    return audio_data
+    audio = audio_pipe(story_text)
+    return audio
 
 # Main part
 st.set_page_config(
@@ -90,8 +90,8 @@ if uploaded_file is not None:
 
     # Play button
     if st.button("Play Audio"):
-        audio_array = audio_data["audio"]
-        sample_rate = audio_data["sampling_rate"]
+        audio_array = audio["audio"]
+        sample_rate = audio["sampling_rate"]
         st.audio(audio_array, sample_rate=sample_rate)
 
 # Footer
