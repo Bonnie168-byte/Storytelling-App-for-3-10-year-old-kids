@@ -11,6 +11,12 @@ UNSAFE_WORDS = [
     "scary", "horror", "monster", "ghost", "violent", "weapon"
 ]
 
+SAFE_CAPTIONS = [
+    "a happy child eating a delicious cookie in a sunny garden",
+    "a friendly person reading a book under a big tree",
+    "a cheerful girl playing with colorful flowers in a park"
+]
+
 def filter_caption(caption):
     """
     Check if the image caption contains inappropriate content.
@@ -33,19 +39,20 @@ def img2text(url):
 
 # text2story
 def text2story(text):
-    story_pipe = pipeline("text-generation", model="TinyLlama/TinyLlama-1.1B-Chat-v1.0")
-    prompt = (
-        f"Write a fun, simple and short story for 3-10 years old kids "
-        f"based on this scene: {text}. "
-        f"The story should be happy and easy to understand."
+    story_pipe = pipeline("text-generation", model="roneneldan/TinyStories-33M")
+    prompt = f"Once upon a time, {text}. "
+    story_results = story_pipe(
+        prompt,
+        max_new_tokens=200,
+        num_return_sequences=1
     )
-    story_results = story_pipe(prompt, max_new_tokens=200, num_return_sequences=1)
     story = story_results[0]["generated_text"]
     return story
 
 # text2audio
 def text2audio(story_text):
-    audio_data = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
+    audio_pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
+    audio_data = audio_pipe(story)
     return audio_data
 
 # Main part
@@ -74,6 +81,11 @@ if uploaded_file is not None:
     with st.spinner("🔍 Processing picture..."):
         scenario = img2text(uploaded_file.name)
     st.write(f"**Scenario:** {scenario}")
+
+    safe_scenario, was_filtered = filter_caption(scenario)
+    if was_filtered:
+        st.warning("🛡️ I made the description more fun for kids!")
+    st.success(f"🖼️ **Scenario:** {safe_scenario}")
 
     # Stage 2: Text to Story (Inline)
     with st.spinner("✍️ Generating a story for you..."):
