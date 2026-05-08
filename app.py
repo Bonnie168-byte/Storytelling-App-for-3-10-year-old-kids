@@ -2,6 +2,7 @@
 import streamlit as st
 from transformers import pipeline
 from PIL import Image
+import random  
 
 # Function part
 # List of words not suitable for kids' stories
