@@ -4,6 +4,27 @@ from transformers import pipeline
 from PIL import Image
 
 # Function part
+# List of words not suitable for kids' stories
+UNSAFE_WORDS = [
+    "smoking", "cigarette", "alcohol", "beer", "wine", "drug",
+    "gun", "knife", "blood", "kill", "dead", "fight", "war",
+    "scary", "horror", "monster", "ghost", "violent", "weapon"
+]
+
+def filter_caption(caption):
+    """
+    Check if the image caption contains inappropriate content.
+    If so, replace with a safe, generic description.
+    Returns (filtered_caption, was_filtered).
+    """
+    caption_lower = caption.lower()
+    for word in UNSAFE_WORDS:
+        if word in caption_lower:
+            # Replace with a kid-friendly generic caption
+            safe_caption = "a person having a wonderful time on a sunny day"
+            return safe_caption, True
+    return caption, False
+    
 # img2text
 def img2text(url):
     image_to_text_model = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
@@ -20,10 +41,16 @@ def text2story(text):
     )
     story_results = story_pipe(
         prompt,
-        max_new_tokens=150,
+        max_new_tokens=200,
         num_return_sequences=1
     )
-    story = story_results[0]["generated_text"]
+    full_output = story_results[0]["generated_text"]
+    
+    if "Story: " in full_output:
+        story = full_output.split("Story: ", 1)[-1].strip()
+    else:
+        story = full_output[len(prompt):].strip()
+
     return story
 
 # text2audio
