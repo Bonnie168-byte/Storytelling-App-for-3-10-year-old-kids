@@ -73,22 +73,18 @@ if uploaded_file is not None:
 
     st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
 
-    # Stage 1: Image to Text (Using the function)
+    # Stage 1: Image to Text
     with st.spinner("🔍 Processing picture..."):
         scenario = img2text(uploaded_file.name)
-    st.write(f"**Scenario:** {scenario}")
-
     safe_scenario, was_filtered = filter_caption(scenario)
-    if was_filtered:
-        st.warning("🛡️ I made the description more fun for kids!")
-    st.success(f"🖼️ **Scenario:** {safe_scenario}")
+    st.write(f"🖼️ **Scenario:** {safe_scenario}")
 
-    # Stage 2: Text to Story (Inline)
+    # Stage 2: Text to Story
     with st.spinner("✍️ Generating a story for you..."):
-        story = text2story(scenario)
+        story = text2story(safe_scenario)
     st.info(f"📖 **Story:**\n\n{story}")
 
-    # Stage 3: Story to Audio (Inline)
+    # Stage 3: Story to Audio
     with st.spinner("🎤 Getting ready to read story..."):
         audio_data = text2audio(story)
 
