@@ -35,11 +35,10 @@ def img2text(url):
 
 # text2story
 def text2story(text):
-    # story_pipe = pipeline("text-generation", model="roneneldan/TinyStories-33M")
-    # prompt = f"Once upon a time, {text}. "
-    story_pipe = pipeline("text-generation", model="pranavpsv/genre-story-generator-v2")
+    story_pipe = pipeline("text-generation", model="roneneldan/TinyStories-33M")
+    prompt = f"Once upon a time, {text}. "
     story_results = story_pipe(
-        text,
+        prompt,
         max_new_tokens=200,
         num_return_sequences=1
     )
