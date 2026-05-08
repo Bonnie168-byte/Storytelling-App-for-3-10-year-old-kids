@@ -35,7 +35,7 @@ def img2text(url):
 
 # text2story
 def text2story(text):
-    story_pipe = pipeline("text-generation", model="roneneldan/TinyStories-33M")
+    story_pipe = pipeline("text-generation", model="ajibawa-2023/Young-Children-Storyteller-Mistral-7B")
     story_results = story_pipe(
         text,
         max_new_tokens=150,
