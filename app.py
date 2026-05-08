@@ -34,23 +34,13 @@ def img2text(url):
 # text2story
 def text2story(text):
     story_pipe = pipeline("text-generation", model="roneneldan/TinyStories-1M")
-    prompt = (
-        f"Write a fun, simple and short story for 3-10 years old kids"
-        f"based on this scene: {text}. "
-        f"The story should be happy and easy to understand. Story:"
-    )
+    prompt = f"Once upon a time, {text}. "
     story_results = story_pipe(
         prompt,
         max_new_tokens=200,
         num_return_sequences=1
     )
-    full_output = story_results[0]["generated_text"]
-    
-    if "Story: " in full_output:
-        story = full_output.split("Story: ", 1)[-1].strip()
-    else:
-        story = full_output[len(prompt):].strip()
-
+    story = story_results[0]["generated_text"]
     return story
 
 # text2audio
