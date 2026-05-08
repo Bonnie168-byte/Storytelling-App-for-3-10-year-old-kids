@@ -73,10 +73,9 @@ st.set_page_config(
 )
 st.title("📚 Kid's Storytelling App Demo✨")
 st.header("Welcome to Kid's Storytelling Session! 🎉")
-st.subheader("Let's turn your picture into a story!")
-st.markdown(
-    "🖼️ **Upload a image** → 📝 **Get a story** → 🔊 **Listen to it**"
-)
+st.subheader("Let's turn Turn Your Image to Audio story.")
+st.markdown("🖼️ **Upload a image** → 📝 **Get a story** → 🔊 **Listen to it**")
+
 uploaded_file = st.file_uploader("Select an Image...", type=["png", "jpg", "jpeg"])
 
 if uploaded_file is not None:
