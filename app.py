@@ -29,7 +29,7 @@ def filter_caption(caption):
 
 # img2text
 def img2text(url):
-    image_to_text_model = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
+    image_to_text_model = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning")
     text = image_to_text_model(url)[0]["generated_text"]
     return text
 
@@ -38,7 +38,7 @@ def text2story(text):
     story_pipe = pipeline("text-generation", model="pranavpsv/genre-story-generator-v2")
     story_results = story_pipe(
         text,
-        max_new_tokens=150,
+        max_new_tokens=200,
         num_return_sequences=1,
         temperature=0.7,
         top_k=50,
