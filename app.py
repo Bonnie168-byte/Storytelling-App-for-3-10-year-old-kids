@@ -38,8 +38,8 @@ st.set_page_config(
     layout="centered"
 )
 st.title("📚 Kid's Storytelling App Demo✨")
-st.header("Welcome to Kid's Storytelling Session!")
-st.subheader("Let's turn your picture into a story! 🎉")
+st.header("Welcome to Kid's Storytelling Session! 🎉")
+st.subheader("Let's turn your picture into a story!")
 st.markdown(
     "🖼️ **Upload a image** → 📝 **Get a story** → 🔊 **Listen to it**"
 )
