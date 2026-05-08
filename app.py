@@ -26,7 +26,7 @@ def filter_caption(caption):
             safe_caption = random.choice(SAFE_CAPTIONS)
             return safe_caption, True
     return caption, False
-    
+
 # img2text
 def img2text(url):
     image_to_text_model = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning")
