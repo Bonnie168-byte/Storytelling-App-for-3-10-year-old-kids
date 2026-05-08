@@ -58,9 +58,9 @@ def text2story(text):
 
     return story
 
-# text2speech
+# text2audio
 def text2audio(story_text):
-    audio_pipe = pipeline("text-to-speech", model="facebook/mms-tts-eng")
+    audio_pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
     audio = audio_pipe(story_text)
     return audio
 
