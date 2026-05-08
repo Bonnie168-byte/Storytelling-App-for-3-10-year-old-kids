@@ -6,26 +6,26 @@ import random
 
 # Function part
 # List of words not suitable for kids' stories
-# UNSAFE_WORDS = [
-#     "smoking", "cigarette", "alcohol", "beer", "wine", "drug",
-#     "gun", "knife", "blood", "kill", "dead", "fight", "war",
-#     "scary", "horror", "monster", "ghost", "violent", "weapon"
-# ]
+UNSAFE_WORDS = [
+    "smoking", "cigarette", "alcohol", "beer", "wine", "drug",
+    "gun", "knife", "blood", "kill", "dead", "fight", "war",
+    "scary", "horror", "monster", "ghost", "violent", "weapon"
+]
 
-# SAFE_CAPTIONS = [
-#     "a happy child eating a delicious cookie in a sunny garden",
-#     "a friendly person reading a book under a big tree",
-#     "a cheerful girl playing with colorful flowers in a park"
-# ]
+SAFE_CAPTIONS = [
+    "a happy child eating a delicious cookie in a sunny garden",
+    "a friendly person reading a book under a big tree",
+    "a cheerful girl playing with colorful flowers in a park"
+]
 
-# def filter_caption(caption):
-#     caption_lower = caption.lower()
-#     for word in UNSAFE_WORDS:
-#         if word in caption_lower:
-#             # Replace with a kid-friendly generic caption
-#             safe_caption = random.choice(SAFE_CAPTIONS)
-#             return safe_caption, True
-#     return caption, False
+def filter_caption(caption):
+    caption_lower = caption.lower()
+    for word in UNSAFE_WORDS:
+        if word in caption_lower:
+            # Replace with a kid-friendly generic caption
+            safe_caption = random.choice(SAFE_CAPTIONS)
+            return safe_caption, True
+    return caption, False
     
 # img2text
 def img2text(url):
@@ -37,13 +37,12 @@ def img2text(url):
 def text2story(text):
     # story_pipe = pipeline("text-generation", model="roneneldan/TinyStories-33M")
     # prompt = f"Once upon a time, {text}. "
-    # story_results = story_pipe(
-    #     prompt,
-    #     max_new_tokens=200,
-    #     num_return_sequences=1
-    # )
     story_pipe = pipeline("text-generation", model="pranavpsv/genre-story-generator-v2")
-    story_results = story_pipe(text)
+    story_results = story_pipe(
+        text,
+        max_new_tokens=200,
+        num_return_sequences=1
+    )
     story = story_results[0]["generated_text"]
     return story
 
@@ -78,14 +77,12 @@ if uploaded_file is not None:
     # Stage 1: Image to Text
     with st.spinner("🔍 Processing picture..."):
         scenario = img2text(uploaded_file.name)
-    # safe_scenario, was_filtered = filter_caption(scenario)
-    # st.write(f"🖼️ **Scenario:** {safe_scenario}")
-    st.write(f"🖼️ **Scenario:** {scenario}")
+    safe_scenario, was_filtered = filter_caption(scenario)
+    st.write(f"🖼️ **Scenario:** {safe_scenario}")
 
     # Stage 2: Text to Story
     with st.spinner("✍️ Generating a story for you..."):
-        # story = text2story(safe_scenario)
-        story = text2story(scenario)
+        story = text2story(safe_scenario)
     st.info(f"📖 **Story:**\n\n{story}")
 
     # Stage 3: Story to Audio
