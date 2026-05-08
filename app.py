@@ -42,7 +42,7 @@ def text2story(text):
     )
     story_results = story_pipe(
         prompt,
-        max_new_tokens=200,
+        max_new_tokens=100,
         num_return_sequences=1,
         temperature=0.7,
         top_k=50,
