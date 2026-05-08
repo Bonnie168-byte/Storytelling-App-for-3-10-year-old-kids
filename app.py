@@ -22,7 +22,11 @@ def text2audio(story_text):
     return audio_data
 
 # Main part
-st.set_page_config(page_title="Your Image to Audio Story", page_icon="🦜")
+st.set_page_config(
+    page_title="Magic Story Time 🌈",
+    page_icon="🧸",
+    layout="centered"
+)
 st.header("Turn Your Image to Audio Story")
 uploaded_file = st.file_uploader("Select an Image...")
 
