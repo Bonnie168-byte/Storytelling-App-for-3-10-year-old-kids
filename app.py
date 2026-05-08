@@ -48,8 +48,8 @@ def text2story(text):
 
 # text2audio
 def text2audio(story_text):
-    audio_pipe = pipeline("text-to-audio", model="MuzaffarSharofitdinov/mms-tts-uzbek-qiz-ovozi_v2")
-    audio_data = audio_pipe(story)
+    audio_pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
+    audio_data = audio_pipe(story_text)
     return audio_data
 
 # Main part
@@ -87,7 +87,7 @@ if uploaded_file is not None:
 
     # Stage 3: Story to Audio
     with st.spinner("🎤 Getting ready to read story..."):
-        audio_data = text2audio(story)
+        audio = text2audio(story)
 
     # Play button
     if st.button("Play Audio"):
